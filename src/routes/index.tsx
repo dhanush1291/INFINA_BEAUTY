@@ -23,7 +23,7 @@ const SLIDES = [
     title: "Where Beauty Meets Style",
     subtitle: "Discover curated dresses & cosmetics from the world's most coveted brands.",
     cta: "Shop New Arrivals",
-    to: "/shop/new" as const,
+    category: "new",
     image: "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?auto=format&fit=crop&w=1800&q=80",
   },
   {
@@ -31,7 +31,7 @@ const SLIDES = [
     title: "Soft. Glowing. Effortless.",
     subtitle: "Skin-first beauty that lets you shine through.",
     cta: "Explore Cosmetics",
-    to: "/shop/cosmetics" as const,
+    category: "cosmetics",
     image: "https://images.unsplash.com/photo-1522335789203-aaa83b4f4d11?auto=format&fit=crop&w=1800&q=80",
   },
   {
@@ -39,7 +39,7 @@ const SLIDES = [
     title: "The Sale, Reimagined",
     subtitle: "Limited-edition pieces at prices you'll love.",
     cta: "Shop Sale",
-    to: "/shop/sale" as const,
+    category: "sale",
     image: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=1800&q=80",
   },
 ];
