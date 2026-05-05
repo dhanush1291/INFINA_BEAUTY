@@ -130,7 +130,7 @@ function Home() {
             <p className="text-xs font-semibold uppercase tracking-[0.25em] text-primary">Trending Now</p>
             <h2 className="mt-2 font-serif text-3xl md:text-4xl">Loved by everyone</h2>
           </div>
-          <Link to="/shop/new" className="hidden text-sm text-primary hover:underline md:inline">
+          <Link to="/shop/$category" params={{ category: "new" }} className="hidden text-sm text-primary hover:underline md:inline">
             View all →
           </Link>
         </div>
@@ -148,9 +148,9 @@ function Home() {
           <h2 className="mt-2 font-serif text-3xl md:text-4xl">From day to night</h2>
         </div>
         <div className="grid gap-4 md:grid-cols-3">
-          <CategoryTile to="/shop/dresses/evening" title="Evening" image="https://images.unsplash.com/photo-1571513722275-4b41940f54b8?auto=format&fit=crop&w=900&q=80" />
-          <CategoryTile to="/shop/dresses/casual" title="Casual" image="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=900&q=80" />
-          <CategoryTile to="/shop/dresses/party" title="Party" image="https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=900&q=80" />
+          <CategoryTile category="dresses" sub="evening" title="Evening" image="https://images.unsplash.com/photo-1571513722275-4b41940f54b8?auto=format&fit=crop&w=900&q=80" />
+          <CategoryTile category="dresses" sub="casual" title="Casual" image="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=900&q=80" />
+          <CategoryTile category="dresses" sub="party" title="Party" image="https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=900&q=80" />
         </div>
       </section>
 
@@ -161,9 +161,9 @@ function Home() {
           <h2 className="mt-2 font-serif text-3xl md:text-4xl">Beauty, curated</h2>
         </div>
         <div className="grid gap-4 md:grid-cols-3">
-          <CategoryTile to="/shop/cosmetics/lipsticks" title="Lipsticks" image="https://images.unsplash.com/photo-1599733589046-8a35aa39b3ac?auto=format&fit=crop&w=900&q=80" />
-          <CategoryTile to="/shop/cosmetics/eyeshadow" title="Eyeshadow" image="https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=900&q=80" />
-          <CategoryTile to="/shop/cosmetics/skincare" title="Skincare" image="https://images.unsplash.com/photo-1631730486572-226d1f595b68?auto=format&fit=crop&w=900&q=80" />
+          <CategoryTile category="cosmetics" sub="lipsticks" title="Lipsticks" image="https://images.unsplash.com/photo-1599733589046-8a35aa39b3ac?auto=format&fit=crop&w=900&q=80" />
+          <CategoryTile category="cosmetics" sub="eyeshadow" title="Eyeshadow" image="https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=900&q=80" />
+          <CategoryTile category="cosmetics" sub="skincare" title="Skincare" image="https://images.unsplash.com/photo-1631730486572-226d1f595b68?auto=format&fit=crop&w=900&q=80" />
         </div>
       </section>
 
