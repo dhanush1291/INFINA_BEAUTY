@@ -90,12 +90,9 @@ function Hero() {
   );
 }
 
-function CategoryTile({ to, title, image }: { to: string; title: string; image: string }) {
-  return (
-    <Link
-      to={to}
-      className="group relative block aspect-[4/5] overflow-hidden rounded-lg bg-muted"
-    >
+function CategoryTile({ category, sub, title, image }: { category: string; sub?: string; title: string; image: string }) {
+  const inner = (
+    <>
       <img
         src={image}
         alt={title}
@@ -108,7 +105,13 @@ function CategoryTile({ to, title, image }: { to: string; title: string; image: 
           Shop now <ChevronRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
         </span>
       </div>
-    </Link>
+    </>
+  );
+  const cls = "group relative block aspect-[4/5] overflow-hidden rounded-lg bg-muted";
+  return sub ? (
+    <Link to="/shop/$category/$sub" params={{ category, sub }} className={cls}>{inner}</Link>
+  ) : (
+    <Link to="/shop/$category" params={{ category }} className={cls}>{inner}</Link>
   );
 }
 
