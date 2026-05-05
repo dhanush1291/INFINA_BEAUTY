@@ -95,11 +95,12 @@ export function Header() {
 
         <nav className="hidden items-center gap-8 lg:flex">
           {NAV.map((n) => {
-            const active = pathname.startsWith(n.to);
+            const active = pathname.startsWith(n.path);
             return (
               <Link
-                key={n.to}
-                to={n.to}
+                key={n.path}
+                to="/shop/$category"
+                params={{ category: n.category }}
                 className={`text-sm font-medium tracking-wide uppercase transition-colors hover:text-primary ${
                   active ? "text-primary" : "text-foreground/80"
                 }`}
