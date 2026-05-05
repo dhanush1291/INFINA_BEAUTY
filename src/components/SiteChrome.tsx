@@ -17,10 +17,10 @@ import {
 import { useNavigate } from "@tanstack/react-router";
 
 const NAV = [
-  { to: "/shop/dresses", label: "Dresses" },
-  { to: "/shop/cosmetics", label: "Cosmetics" },
-  { to: "/shop/new", label: "New Arrivals" },
-  { to: "/shop/sale", label: "Sale" },
+  { category: "dresses", path: "/shop/dresses", label: "Dresses" },
+  { category: "cosmetics", path: "/shop/cosmetics", label: "Cosmetics" },
+  { category: "new", path: "/shop/new", label: "New Arrivals" },
+  { category: "sale", path: "/shop/sale", label: "Sale" },
 ] as const;
 
 export function Header() {
