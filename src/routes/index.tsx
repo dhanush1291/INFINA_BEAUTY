@@ -70,7 +70,7 @@ function Hero() {
           </h1>
           <p className="mt-5 max-w-md text-base text-foreground/80 md:text-lg">{SLIDES[i].subtitle}</p>
           <Button asChild size="lg" className="mt-8 px-8">
-            <Link to={SLIDES[i].to}>
+            <Link to="/shop/$category" params={{ category: SLIDES[i].category }}>
               {SLIDES[i].cta} <ChevronRight className="ml-1 h-4 w-4" />
             </Link>
           </Button>
