@@ -57,7 +57,7 @@ function WishlistPage() {
             Save your favourite pieces and come back any time.
           </p>
           <Button asChild className="mt-6">
-            <Link to="/shop/new">Browse products</Link>
+            <Link to="/shop/$category" params={{ category: "new" }}>Browse products</Link>
           </Button>
         </div>
       ) : (
