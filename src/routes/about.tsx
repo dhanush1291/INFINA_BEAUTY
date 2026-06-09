@@ -5,8 +5,8 @@ export const Route = createFileRoute("/about")({
   component: AboutPage,
   head: () => ({
     meta: [
-      { title: "About Sai" },
-      { name: "description", content: "Sai is a curated destination for premium cosmetics & beauty products — your premier beauty destination." },
+      { title: "About INFINA" },
+      { name: "description", content: "INFINA is a curated destination for premium cosmetics & beauty products — your premier beauty destination." },
     ],
   }),
 });
@@ -17,9 +17,9 @@ function AboutPage() {
       <section className="bg-gradient-hero py-20">
         <div className="mx-auto max-w-3xl px-6 text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.25em] text-primary">Our story</p>
-          <h1 className="mt-3 font-serif text-5xl md:text-6xl">About Sai</h1>
+          <h1 className="mt-3 font-serif text-5xl md:text-6xl">About INFINA</h1>
           <p className="mt-6 text-lg text-foreground/80">
-            Sai was created to bring you the finest selection of cosmetics and beauty products — without
+            INFINA was created to bring you the finest selection of cosmetics and beauty products — without
             the noise. We curate, you discover.
           </p>
         </div>
@@ -29,14 +29,14 @@ function AboutPage() {
         <h2 className="font-serif text-3xl">Our mission</h2>
         <p className="mt-4 text-base leading-relaxed text-muted-foreground">
           Online shopping should feel like walking into your favourite beauty boutique — quiet, beautiful, and
-          full of products chosen with intention. Sai partners with trusted retailers so we can focus on
+          full of products chosen with intention. INFINA partners with trusted retailers so we can focus on
           what matters: surfacing extraordinary beauty products with honest pricing and a transparent affiliate
           model.
         </p>
         <h2 className="mt-12 font-serif text-3xl">How it works</h2>
         <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-          Every product on Sai links to a trusted retail partner. When you click "Shop Now," we take you
-          directly to their site to complete your purchase. Sai may earn a commission — at no extra cost
+          Every product on INFINA links to a trusted retail partner. When you click "Shop Now," we take you
+          directly to their site to complete your purchase. INFINA may earn a commission — at no extra cost
           to you — which helps us keep curating the best of the best.
         </p>
       </section>

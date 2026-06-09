@@ -9,7 +9,7 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/wishlist")({
   component: WishlistPage,
   head: () => ({
-    meta: [{ title: "My Wishlist — Sai" }, { name: "description", content: "Your saved Sai favourites." }],
+    meta: [{ title: "My Wishlist — INFINA" }, { name: "description", content: "Your saved INFINA favourites." }],
   }),
 });
 

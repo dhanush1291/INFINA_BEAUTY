@@ -3,7 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 export const Route = createFileRoute("/policies/returns")({
   component: ReturnsPage,
   head: () => ({
-    meta: [{ title: "Returns & Refunds — Sai" }, { name: "description", content: "How returns work for purchases made through Sai's partner retailers." }],
+    meta: [{ title: "Returns & Refunds — INFINA" }, { name: "description", content: "How returns work for purchases made through INFINA's partner retailers." }],
   }),
 });
 
@@ -13,7 +13,7 @@ function ReturnsPage() {
       <h1 className="font-serif text-4xl">Returns & Refunds</h1>
       <div className="prose prose-neutral mt-6 max-w-none text-muted-foreground">
         <p>
-          Sai is an affiliate platform — we don't sell products directly. When you click "Shop Now," your
+          INFINA is an affiliate platform — we don't sell products directly. When you click "Shop Now," your
           purchase is completed on a partner retailer's website. All returns, refunds, and exchanges are
           handled by that retailer in line with their own policy.
         </p>
@@ -25,7 +25,7 @@ function ReturnsPage() {
         </ol>
         <h2 className="mt-8 font-serif text-2xl text-foreground">Need help?</h2>
         <p>
-          If you can't reach the retailer, email us at <a href="mailto:hello@sai.example" className="text-primary">hello@sai.example</a> and we'll do our best to help.
+          If you can't reach the retailer, email us at <a href="mailto:hello@INFINA.example" className="text-primary">hello@INFINA.example</a> and we'll do our best to help.
         </p>
       </div>
     </div>

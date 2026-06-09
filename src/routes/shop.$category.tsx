@@ -11,14 +11,14 @@ export const Route = createFileRoute("/shop/$category")({
   ),
   head: ({ params }) => {
     const titles: Record<string, string> = {
-      cosmetics: "Shop Cosmetics — Sai",
-      new: "New Arrivals — Sai",
-      sale: "Sale — Sai",
+      cosmetics: "Shop Cosmetics — INFINA",
+      new: "New Arrivals — INFINA",
+      sale: "Sale — INFINA",
     };
     return {
       meta: [
-        { title: titles[params.category] ?? "Shop — Sai" },
-        { name: "description", content: `Shop ${params.category} at Sai — curated beauty picks from trusted partners.` },
+        { title: titles[params.category] ?? "Shop — INFINA" },
+        { name: "description", content: `Shop ${params.category} at INFINA — curated beauty picks from trusted partners.` },
       ],
     };
   },

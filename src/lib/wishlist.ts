@@ -1,6 +1,6 @@
 import { useEffect, useState, useSyncExternalStore } from "react";
 
-const KEY = "sai_wishlist_v1";
+const KEY = "INFINA_wishlist_v1";
 
 type Listener = () => void;
 const listeners = new Set<Listener>();

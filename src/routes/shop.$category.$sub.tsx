@@ -10,8 +10,8 @@ export const Route = createFileRoute("/shop/$category/$sub")({
   component: SubPage,
   head: ({ params }) => ({
     meta: [
-      { title: `${subcategoryLabel(params.sub)} — Sai` },
-      { name: "description", content: `Shop ${subcategoryLabel(params.sub)} at Sai.` },
+      { title: `${subcategoryLabel(params.sub)} — INFINA` },
+      { name: "description", content: `Shop ${subcategoryLabel(params.sub)} at INFINA.` },
     ],
   }),
   notFoundComponent: () => (

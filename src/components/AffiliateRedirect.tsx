@@ -50,7 +50,7 @@ export function AffiliateRedirect({ open, onOpenChange, url, partnerName, produc
           </div>
         </div>
         <p className="text-center text-xs text-muted-foreground">
-          Sai may earn commission. Prices and availability are set by the partner.
+          INFINA may earn commission. Prices and availability are set by the partner.
         </p>
         <div className="flex gap-2">
           <Button variant="outline" className="flex-1" onClick={() => onOpenChange(false)}>

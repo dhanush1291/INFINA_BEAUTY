@@ -15,10 +15,10 @@ export const Route = createFileRoute("/product/$id")({
   component: ProductPage,
   head: ({ params }) => {
     const p = getProduct(params.id);
-    if (!p) return { meta: [{ title: "Product — Sai" }] };
+    if (!p) return { meta: [{ title: "Product — INFINA" }] };
     return {
       meta: [
-        { title: `${p.name} — ${p.brand} — Sai` },
+        { title: `${p.name} — ${p.brand} — INFINA` },
         { name: "description", content: p.description },
         { property: "og:title", content: `${p.name} — ${p.brand}` },
         { property: "og:description", content: p.description },

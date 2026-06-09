@@ -11,8 +11,8 @@ export const Route = createFileRoute("/contact")({
   component: ContactPage,
   head: () => ({
     meta: [
-      { title: "Contact — Sai" },
-      { name: "description", content: "Get in touch with the Sai team." },
+      { title: "Contact — INFINA" },
+      { name: "description", content: "Get in touch with the INFINA team." },
     ],
   }),
 });
@@ -62,8 +62,8 @@ function ContactPage() {
       </form>
 
       <div className="mt-10 flex flex-wrap gap-6 text-sm text-muted-foreground">
-        <span className="inline-flex items-center gap-2"><Mail className="h-4 w-4" /> hello@sai.example</span>
-        <span className="inline-flex items-center gap-2"><Instagram className="h-4 w-4" /> @sai_official</span>
+        <span className="inline-flex items-center gap-2"><Mail className="h-4 w-4" /> hello@infina.beauty</span>
+        <span className="inline-flex items-center gap-2"><Instagram className="h-4 w-4" /> @infina_beauty</span>
       </div>
     </div>
   );

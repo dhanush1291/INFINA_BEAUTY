@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/policies/privacy")({
   component: PrivacyPage,
-  head: () => ({ meta: [{ title: "Privacy Policy — Sai" }] }),
+  head: () => ({ meta: [{ title: "Privacy Policy — INFINA" }] }),
 });
 
 function PrivacyPage() {
@@ -14,9 +14,9 @@ function PrivacyPage() {
         <h2 className="mt-6 font-serif text-2xl text-foreground">What we collect</h2>
         <p>Newsletter sign-ups (email only), wishlist data stored locally in your browser, and standard analytics for traffic understanding.</p>
         <h2 className="mt-6 font-serif text-2xl text-foreground">Affiliate tracking</h2>
-        <p>When you click through to a partner site, that partner may set cookies to track the referral. Sai does not receive your personal information from these clicks.</p>
+        <p>When you click through to a partner site, that partner may set cookies to track the referral. INFINA does not receive your personal information from these clicks.</p>
         <h2 className="mt-6 font-serif text-2xl text-foreground">Contact</h2>
-        <p>Questions? Email <a className="text-primary" href="mailto:privacy@sai.example">privacy@sai.example</a>.</p>
+        <p>Questions? Email <a className="text-primary" href="mailto:privacy@INFINA.example">privacy@INFINA.example</a>.</p>
       </div>
     </div>
   );

@@ -9,8 +9,8 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Sai — Your Premier Cosmetics Destination" },
-      { name: "description", content: "Curated cosmetics & beauty products from trusted partners. Discover your perfect beauty look." },
+      { title: "INFINA — Your Premier Cosmetics Destination" },
+      { name: "description", content: "Curated cosmetics & beauty products from trusted partners. Discover your perfect beauty look at INFINA." },
     ],
   }),
   component: Home,
@@ -174,7 +174,7 @@ function Home() {
       <section className="bg-muted/40 py-20">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mb-12 text-center">
-            <h2 className="font-serif text-3xl md:text-4xl">Why shop with Sai</h2>
+            <h2 className="font-serif text-3xl md:text-4xl">Why shop with INFINA</h2>
           </div>
           <div className="grid gap-8 md:grid-cols-3">
             {[
@@ -214,14 +214,14 @@ function Home() {
       {/* Newsletter */}
       <section className="bg-gradient-hero py-24">
         <div className="mx-auto max-w-2xl px-6 text-center">
-          <h2 className="font-serif text-4xl md:text-5xl">Join the Sai Beauty Club</h2>
+          <h2 className="font-serif text-4xl md:text-5xl">Join the INFINA Beauty Club</h2>
           <p className="mt-3 text-foreground/80">
             Sign up and get 10% off your first purchase, plus exclusive drops & beauty tips.
           </p>
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              toast.success("Welcome to Sai! Check your inbox for your 10% off code.");
+              toast.success("Welcome to INFINA! Check your inbox for your 10% off code.");
               (e.currentTarget as HTMLFormElement).reset();
             }}
             className="mt-8 flex flex-col gap-3 sm:flex-row"

@@ -22,7 +22,7 @@ export const Route = createFileRoute("/admin")({
     component: AdminPage,
     head: () => ({
         meta: [
-            { title: "Admin Panel — Sai" },
+            { title: "Admin Panel — INFINA" },
             { name: "description", content: "Manage your cosmetics products — add, edit, and delete products with images, names, and affiliate links." },
         ],
     }),
@@ -358,7 +358,7 @@ function AdminPage() {
                                     <Input
                                         value={editingProduct.brand}
                                         onChange={(e) => setEditingProduct({ ...editingProduct, brand: e.target.value })}
-                                        placeholder="e.g. Sai Beauty"
+                                        placeholder="e.g. INFINA Beauty"
                                     />
                                 </div>
                                 <div>
@@ -366,7 +366,7 @@ function AdminPage() {
                                     <Input
                                         value={editingProduct.partnerName}
                                         onChange={(e) => setEditingProduct({ ...editingProduct, partnerName: e.target.value })}
-                                        placeholder="e.g. Sai Beauty"
+                                        placeholder="e.g. INFINA Beauty"
                                     />
                                 </div>
                             </div>

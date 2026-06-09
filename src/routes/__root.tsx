@@ -31,9 +31,9 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Sai — Your Premier Cosmetics Destination" },
-      { name: "description", content: "Curated cosmetics & beauty products from trusted partners. Discover your perfect beauty look at Sai." },
-      { property: "og:title", content: "Sai — Your Premier Cosmetics Destination" },
+      { title: "INFINA — Premium Cosmetics & Skincare" },
+      { name: "description", content: "Curated cosmetics & beauty products from trusted partners. Discover your perfect beauty look at INFINA." },
+      { property: "og:title", content: "INFINA — Premium Cosmetics & Skincare" },
       { property: "og:description", content: "Curated cosmetics & beauty products from trusted partners." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

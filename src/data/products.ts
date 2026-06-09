@@ -67,22 +67,22 @@ const nid = () => `p${++_id}`;
 export const defaultProducts: Product[] = [
   // COSMETICS — lipsticks
   {
-    id: nid(), name: "Velvet Matte Lipstick", brand: "Sai Beauty", category: "cosmetics",
+    id: nid(), name: "Velvet Matte Lipstick", brand: "INFINA Beauty", category: "cosmetics",
     subcategory: "lipsticks", price: 24, originalPrice: 32,
     images: [u(C[1]), u(C[0])], rating: 4.8, reviewCount: 1203,
     colors: ["#a23b3b", "#7a1f2b", "#c97a7a", "#5a1a1a"],
     description: "Long-wear matte lipstick that feels like silk.",
     details: "Vegan. Cruelty-free. 8 hour wear.",
-    affiliateUrl: "https://example.com/partner/matte-lipstick", partnerName: "Sai Beauty",
+    affiliateUrl: "https://example.com/partner/matte-lipstick", partnerName: "INFINA Beauty",
     badges: ["BESTSELLER", "SALE"], trending: true,
   },
   {
-    id: nid(), name: "High-Shine Lip Gloss", brand: "Sai Beauty", category: "cosmetics",
+    id: nid(), name: "High-Shine Lip Gloss", brand: "INFINA Beauty", category: "cosmetics",
     subcategory: "lipsticks", price: 18,
     images: [u(C[2]), u(C[1])], rating: 4.6, reviewCount: 842,
     colors: ["#e8b8b0", "#d4847f", "#c0635c"],
     description: "Non-sticky, mirror-finish gloss with hyaluronic acid.",
-    affiliateUrl: "https://example.com/partner/lip-gloss", partnerName: "Sai Beauty",
+    affiliateUrl: "https://example.com/partner/lip-gloss", partnerName: "INFINA Beauty",
     badges: ["NEW"], newArrival: true, trending: true,
   },
   // eyeshadow
@@ -121,12 +121,12 @@ export const defaultProducts: Product[] = [
   },
   // blush
   {
-    id: nid(), name: "Cream Blush Stick", brand: "Sai Beauty", category: "cosmetics",
+    id: nid(), name: "Cream Blush Stick", brand: "INFINA Beauty", category: "cosmetics",
     subcategory: "blush", price: 26,
     images: [u(C[7]), u(C[8])], rating: 4.6, reviewCount: 612,
     colors: ["#e8a3a3", "#c97070", "#d4847f"],
     description: "A dewy flush that melts into skin.",
-    affiliateUrl: "https://example.com/partner/cream-blush", partnerName: "Sai Beauty",
+    affiliateUrl: "https://example.com/partner/cream-blush", partnerName: "INFINA Beauty",
     trending: true,
   },
   {
@@ -157,11 +157,11 @@ export const defaultProducts: Product[] = [
   },
   // tools
   {
-    id: nid(), name: "Vegan Brush Set (12pc)", brand: "Sai Beauty", category: "cosmetics",
+    id: nid(), name: "Vegan Brush Set (12pc)", brand: "INFINA Beauty", category: "cosmetics",
     subcategory: "tools", price: 78, originalPrice: 110,
     images: [u(C[11]), u(C[0])], rating: 4.7, reviewCount: 256,
     description: "12 essential brushes with rose-gold ferrules.",
-    affiliateUrl: "https://example.com/partner/brush-set", partnerName: "Sai Beauty",
+    affiliateUrl: "https://example.com/partner/brush-set", partnerName: "INFINA Beauty",
     badges: ["SALE"], newArrival: true,
   },
   {
@@ -175,7 +175,7 @@ export const defaultProducts: Product[] = [
 
 // ─── Firebase Firestore backed product store ─────────────────────────────────
 const COLLECTION_NAME = "products";
-const STORAGE_KEY = "sai_products_cache";
+const STORAGE_KEY = "infina_products_cache";
 
 /**
  * Fetches products from Firestore.

@@ -180,7 +180,7 @@ export function Footer() {
         <div>
           <h4 className="mb-3 text-sm font-semibold uppercase tracking-wide">Company</h4>
           <ul className="space-y-2 text-sm text-muted-foreground">
-            <li><Link to="/about" className="hover:text-foreground">About Sai</Link></li>
+            <li><Link to="/about" className="hover:text-foreground">About INFINA</Link></li>
             <li><Link to="/contact" className="hover:text-foreground">Contact</Link></li>
             <li><Link to="/policies/returns" className="hover:text-foreground">Returns</Link></li>
             <li><Link to="/policies/privacy" className="hover:text-foreground">Privacy</Link></li>
@@ -190,8 +190,8 @@ export function Footer() {
       </div>
       <div className="border-t">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 px-6 py-6 text-xs text-muted-foreground md:flex-row lg:px-8">
-          <p>© {new Date().getFullYear()} Sai. All rights reserved.</p>
-          <p>Sai may earn commission from purchases made through partner links.</p>
+          <p>© {new Date().getFullYear()} INFINA. All rights reserved.</p>
+          <p>INFINA may earn commission from purchases made through partner links.</p>
         </div>
       </div>
     </footer>
