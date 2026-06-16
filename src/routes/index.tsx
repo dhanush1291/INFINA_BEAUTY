@@ -23,16 +23,16 @@ const SLIDES = [
     title: "Glow Like Never Before",
     subtitle: "High-performance skincare meets luxury cosmetics. Curated for the modern beauty enthusiast.",
     cta: "Shop The Collection",
-    category: "cosmetics",
-    image: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=1800&q=80",
+    category: "skincare",
+    image: "/images/hero-skincare.png",
   },
   {
     eyebrow: "Summer Essentials",
     title: "Your Daily Ritual",
     subtitle: "Experience the ultimate hydration and finish with our best-selling summer picks.",
     cta: "Shop Best Sellers",
-    category: "new",
-    image: "https://images.unsplash.com/photo-1522335789203-aaa83b4f4d11?auto=format&fit=crop&w=1800&q=80",
+    category: "skincare",
+    image: "/images/hero-summer.png",
   },
 ];
 
@@ -51,15 +51,16 @@ function Hero() {
           className={`absolute inset-0 transition-opacity duration-1000 ${idx === i ? "opacity-100" : "opacity-0"}`}
         >
           <img src={s.image} alt="" className="h-full w-full object-cover object-center lg:object-[center_30%]" />
+          <div className="absolute inset-0 bg-black/20" />
         </div>
       ))}
       <div className="relative z-10 mx-auto flex h-full max-w-7xl items-center px-6 lg:px-8">
         <div className="max-w-md animate-fade-in" key={i}>
-          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-foreground/60">{SLIDES[i].eyebrow}</p>
-          <h1 className="mt-4 font-serif text-5xl leading-[1] tracking-tight md:text-7xl uppercase text-[#a37c7c]">
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-white/80">{SLIDES[i].eyebrow}</p>
+          <h1 className="mt-4 font-serif text-5xl leading-[1] tracking-tight md:text-7xl uppercase text-white drop-shadow-md">
             {SLIDES[i].title}
           </h1>
-          <p className="mt-8 text-lg font-light leading-relaxed text-foreground/80 lowercase">
+          <p className="mt-8 text-lg font-light leading-relaxed text-white/90 lowercase drop-shadow-sm">
             {SLIDES[i].subtitle}
           </p>
           <div className="mt-10">
@@ -84,11 +85,11 @@ function Hero() {
   );
 }
 
-function CategoryCircle({ category, sub, title, image }: { category: string; sub: string; title: string; image: string }) {
+function CategoryCircle({ category, title, image }: { category: string; title: string; image: string }) {
   return (
     <Link
-      to="/shop/$category/$sub"
-      params={{ category, sub }}
+      to="/shop/$category"
+      params={{ category }}
       className="group flex flex-col items-center gap-4 text-center"
     >
       <div className="relative h-40 w-40 overflow-hidden rounded-full border border-border shadow-soft transition-transform duration-500 group-hover:scale-105 md:h-56 md:w-56">
@@ -115,10 +116,11 @@ function Home() {
 
   const trending = allProducts.filter((p) => p.trending).slice(0, 8);
   const collections = [
-    { sub: "lipsticks", title: "LIPS", image: "https://images.unsplash.com/photo-1599733589046-8a35aa39b3ac?auto=format&fit=crop&w=600&q=80" },
-    { sub: "eyeshadow", title: "EYES", image: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=600&q=80" },
-    { sub: "skincare", title: "SKIN", image: "https://images.unsplash.com/photo-1631730486572-226d1f595b68?auto=format&fit=crop&w=600&q=80" },
-    { sub: "blush", title: "FACE", image: "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?auto=format&fit=crop&w=600&q=80" },
+    { category: "skincare", title: "SKINCARE", image: "/images/hero-skincare.png" },
+    { category: "makeup", title: "MAKEUP", image: "/images/cat-makeup.png" },
+    { category: "hair-care", title: "HAIR CARE", image: "/images/cat-haircare.png" },
+    { category: "fragrances", title: "FRAGRANCES", image: "/images/cat-fragrance.png" },
+    { category: "mens-grooming", title: "MEN'S GROOMING", image: "https://images.unsplash.com/photo-1503236823255-94609f598e71?auto=format&fit=crop&w=600&q=80" },
   ];
 
   return (
@@ -134,9 +136,8 @@ function Home() {
         <div className="flex flex-wrap justify-center gap-8 md:gap-16">
           {collections.map((cat) => (
             <CategoryCircle
-              key={cat.sub}
-              category="cosmetics"
-              sub={cat.sub}
+              key={cat.category}
+              category={cat.category}
               title={cat.title}
               image={cat.image}
             />
@@ -152,7 +153,7 @@ function Home() {
               <p className="text-sm font-medium uppercase tracking-[0.3em] text-primary">Fan Favorites</p>
               <h2 className="mt-2 font-serif text-4xl tracking-tight md:text-5xl">Best Sellers</h2>
             </div>
-            <Link to="/shop/$category" params={{ category: "cosmetics" }} className="group flex items-center text-sm font-medium uppercase tracking-widest hover:text-primary transition-colors">
+            <Link to="/shop/$category" params={{ category: "skincare" }} className="group flex items-center text-sm font-medium uppercase tracking-widest hover:text-primary transition-colors">
               View All Products <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Link>
           </div>
@@ -167,7 +168,7 @@ function Home() {
       {/* Full Width Callout */}
       <section className="relative h-[60vh] min-h-[400px] w-full overflow-hidden">
         <img
-          src="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?auto=format&fit=crop&w=1800&q=80"
+          src="/images/callout-glow.png"
           alt=""
           className="h-full w-full object-cover"
         />
@@ -175,7 +176,7 @@ function Home() {
         <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
           <h2 className="max-w-2xl font-serif text-4xl text-white md:text-6xl uppercase tracking-tight">The Perfect Glow Starts Here</h2>
           <Button asChild size="lg" className="mt-8 h-14 px-12 text-base uppercase tracking-widest bg-white text-black hover:bg-white/90 rounded-none border-none">
-            <Link to="/shop/$category" params={{ category: "cosmetics" }}>Shop Skincare</Link>
+            <Link to="/shop/$category" params={{ category: "skincare" }}>Shop Skincare</Link>
           </Button>
         </div>
       </section>

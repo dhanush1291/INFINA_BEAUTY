@@ -11,7 +11,16 @@ export const Route = createFileRoute("/shop/$category")({
   ),
   head: ({ params }) => {
     const titles: Record<string, string> = {
-      cosmetics: "Shop Cosmetics — INFINA",
+      skincare: "Skincare — INFINA",
+      makeup: "Makeup — INFINA",
+      "hair-care": "Hair Care — INFINA",
+      "body-care": "Body Care — INFINA",
+      fragrances: "Fragrances — INFINA",
+      "nail-care": "Nail Care — INFINA",
+      "personal-care": "Personal Care — INFINA",
+      "mens-grooming": "Men's Grooming — INFINA",
+      "beauty-tools": "Beauty Tools — INFINA",
+      "natural-organic": "Natural & Organic — INFINA",
       new: "New Arrivals — INFINA",
       sale: "Sale — INFINA",
     };
@@ -25,6 +34,7 @@ export const Route = createFileRoute("/shop/$category")({
 });
 
 import { useProducts } from "@/hooks/useProducts";
+import { PRODUCT_CATEGORIES, type ProductCategory } from "@/data/products";
 
 function CategoryPage() {
   const { category } = Route.useParams();
@@ -40,24 +50,28 @@ function CategoryPage() {
 
   let title = "";
   let source = allProducts;
-  switch (category) {
-    case "cosmetics":
-      title = "Cosmetics";
-      source = allProducts.filter((p) => p.category === "cosmetics");
-      break;
-    case "new":
-      title = "New Arrivals";
-      source = allProducts.filter((p) => p.newArrival);
-      break;
-    case "sale":
-      title = "Sale";
-      source = allProducts.filter((p) => !!p.originalPrice);
-      break;
-    default:
-      throw notFound();
-  }
+  let subs: { slug: string; label: string }[] = [];
 
-  const subs = category === "cosmetics" ? COSMETIC_SUBCATEGORIES : [];
+  const categoryInfo = PRODUCT_CATEGORIES.find(c => c.slug === category);
+
+  if (categoryInfo) {
+    title = categoryInfo.label;
+    source = allProducts.filter((p) => p.category === category);
+    subs = categoryInfo.subcategories;
+  } else {
+    switch (category) {
+      case "new":
+        title = "New Arrivals";
+        source = allProducts.filter((p) => p.newArrival);
+        break;
+      case "sale":
+        title = "Sale";
+        source = allProducts.filter((p) => !!p.originalPrice);
+        break;
+      default:
+        throw notFound();
+    }
+  }
 
   return (
     <>

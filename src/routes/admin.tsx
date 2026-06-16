@@ -10,8 +10,10 @@ import {
     deleteProductFromDb,
     resetProductsInDb,
     defaultProducts,
-    COSMETIC_SUBCATEGORIES,
-    type Product
+    PRODUCT_CATEGORIES,
+    ALL_SUBCATEGORIES,
+    type Product,
+    type ProductCategory
 } from "@/data/products";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -39,8 +41,8 @@ function emptyProduct(): Product {
         id: generateId(),
         name: "",
         brand: "",
-        category: "cosmetics",
-        subcategory: "lipsticks",
+        category: "skincare",
+        subcategory: "face-wash",
         price: 0,
         images: [],
         rating: 4.5,
@@ -220,8 +222,12 @@ function AdminPage() {
                         className="rounded-md border border-input bg-background px-3 py-2 text-sm"
                     >
                         <option value="all">All Categories</option>
-                        {COSMETIC_SUBCATEGORIES.map((s) => (
-                            <option key={s.slug} value={s.slug}>{s.label}</option>
+                        {PRODUCT_CATEGORIES.map((cat) => (
+                            <optgroup key={cat.slug} label={cat.label}>
+                                {cat.subcategories.map((s) => (
+                                    <option key={s.slug} value={s.slug}>{s.label}</option>
+                                ))}
+                            </optgroup>
                         ))}
                     </select>
                 </div>
@@ -371,18 +377,40 @@ function AdminPage() {
                                 </div>
                             </div>
 
-                            {/* Subcategory */}
-                            <div>
-                                <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide">Subcategory *</label>
-                                <select
-                                    value={editingProduct.subcategory}
-                                    onChange={(e) => setEditingProduct({ ...editingProduct, subcategory: e.target.value })}
-                                    className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-                                >
-                                    {COSMETIC_SUBCATEGORIES.map((s) => (
-                                        <option key={s.slug} value={s.slug}>{s.label}</option>
-                                    ))}
-                                </select>
+                            {/* Category + Subcategory */}
+                            <div className="grid gap-4 md:grid-cols-2">
+                                <div>
+                                    <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide">Category *</label>
+                                    <select
+                                        value={editingProduct.category}
+                                        onChange={(e) => {
+                                            const newCat = e.target.value as ProductCategory;
+                                            const catInfo = PRODUCT_CATEGORIES.find(c => c.slug === newCat);
+                                            setEditingProduct({
+                                                ...editingProduct,
+                                                category: newCat,
+                                                subcategory: catInfo?.subcategories[0]?.slug ?? "",
+                                            });
+                                        }}
+                                        className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                                    >
+                                        {PRODUCT_CATEGORIES.map((cat) => (
+                                            <option key={cat.slug} value={cat.slug}>{cat.label}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <div>
+                                    <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide">Subcategory *</label>
+                                    <select
+                                        value={editingProduct.subcategory}
+                                        onChange={(e) => setEditingProduct({ ...editingProduct, subcategory: e.target.value })}
+                                        className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                                    >
+                                        {PRODUCT_CATEGORIES.find(c => c.slug === editingProduct.category)?.subcategories.map((s) => (
+                                            <option key={s.slug} value={s.slug}>{s.label}</option>
+                                        ))}
+                                    </select>
+                                </div>
                             </div>
 
                             {/* Price */}

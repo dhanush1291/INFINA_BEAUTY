@@ -2,9 +2,10 @@ import { createFileRoute, notFound } from "@tanstack/react-router";
 import { ShopListing } from "@/components/ShopListing";
 import {
   products,
-  COSMETIC_SUBCATEGORIES,
+  PRODUCT_CATEGORIES,
   subcategoryLabel,
 } from "@/data/products";
+import { useProducts } from "@/hooks/useProducts";
 
 export const Route = createFileRoute("/shop/$category/$sub")({
   component: SubPage,
@@ -23,22 +24,30 @@ export const Route = createFileRoute("/shop/$category/$sub")({
 
 function SubPage() {
   const { category, sub } = Route.useParams();
+  const { products: allProducts, isLoading } = useProducts();
 
-  if (category !== "cosmetics") throw notFound();
+  const categoryInfo = PRODUCT_CATEGORIES.find(c => c.slug === category);
+  if (!categoryInfo) throw notFound();
 
-  const subs = COSMETIC_SUBCATEGORIES;
-  const found = subs.find((s) => s.slug === sub);
+  const found = categoryInfo.subcategories.find((s) => s.slug === sub);
   if (!found) throw notFound();
 
-  const source = products.filter((p) => p.category === category && p.subcategory === sub);
-  const catLabel = "Cosmetics";
+  if (isLoading) {
+    return (
+      <div className="flex min-h-[60vh] items-center justify-center">
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+      </div>
+    );
+  }
+
+  const source = allProducts.filter((p) => p.category === category && p.subcategory === sub);
 
   return (
     <ShopListing
       title={found.label}
       crumbs={[
         { label: "Home", to: "/" },
-        { label: catLabel, to: `/shop/${category}` },
+        { label: categoryInfo.label, to: `/shop/${category}` },
         { label: found.label },
       ]}
       source={source}

@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Heart, Menu, Search, X, Settings } from "lucide-react";
+import { Heart, Menu, Search, X, Settings, User, LogOut } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Logo } from "./Logo";
 import { Button } from "./ui/button";
@@ -15,9 +15,22 @@ import {
   CommandList,
 } from "./ui/command";
 import { useNavigate } from "@tanstack/react-router";
+import { useAuth } from "@/lib/auth";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
+import { toast } from "sonner";
 
 const NAV = [
-  { category: "cosmetics", path: "/shop/cosmetics", label: "Cosmetics" },
+  { category: "skincare", path: "/shop/skincare", label: "Skincare" },
+  { category: "makeup", path: "/shop/makeup", label: "Makeup" },
+  { category: "hair-care", path: "/shop/hair-care", label: "Hair Care" },
+  { category: "fragrances", path: "/shop/fragrances", label: "Fragrances" },
   { category: "new", path: "/shop/new", label: "New Arrivals" },
   { category: "sale", path: "/shop/sale", label: "Sale" },
 ] as const;
@@ -29,6 +42,7 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const navigate = useNavigate();
+  const { user, userProfile, logout } = useAuth();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -53,7 +67,7 @@ export function Header() {
       {/* Announcement Bar */}
       <div className="bg-primary/40 py-2 text-center text-[11px] font-medium tracking-wider uppercase flex items-center justify-center gap-2">
         <span>💕 custom engraving on all cosmic bottles 💕</span>
-        <Link to="/shop/$category" params={{ category: "cosmetics" }} className="underline">shop now</Link>
+        <Link to="/shop/$category" params={{ category: "skincare" }} className="underline">shop now</Link>
       </div>
 
       <div className={`sticky top-0 z-40 w-full border-b transition-colors ${scrolled ? "bg-background/95 backdrop-blur-md border-border" : "bg-background border-transparent"}`}>
@@ -90,6 +104,24 @@ export function Header() {
                     ))}
                     <Link to="/about" className="rounded-md px-3 py-3 text-base hover:bg-muted">About</Link>
                     <Link to="/contact" className="rounded-md px-3 py-3 text-base hover:bg-muted">Contact</Link>
+                    <div className="my-2 border-t" />
+                    {user ? (
+                      <>
+                        <Link to="/account" className="rounded-md px-3 py-3 text-base font-medium hover:bg-muted flex items-center gap-2">
+                          <User className="h-4 w-4" /> My Account
+                        </Link>
+                        <button
+                          onClick={async () => { await logout(); toast.success("Signed out."); }}
+                          className="rounded-md px-3 py-3 text-base hover:bg-muted text-left flex items-center gap-2 w-full text-destructive"
+                        >
+                          <LogOut className="h-4 w-4" /> Sign Out
+                        </button>
+                      </>
+                    ) : (
+                      <Link to="/auth" className="rounded-md px-3 py-3 text-base font-medium hover:bg-muted flex items-center gap-2">
+                        <User className="h-4 w-4" /> Sign In / Register
+                      </Link>
+                    )}
                   </nav>
                 </div>
               </SheetContent>
@@ -111,13 +143,58 @@ export function Header() {
                 <Heart className="h-4 w-4" />
               </Button>
             </Link>
-            <Button variant="ghost" size="icon" aria-label="Account">
-              <Search className="h-4 w-4" onClick={() => setSearchOpen(true)} />
+            <Button variant="ghost" size="icon" aria-label="Search" onClick={() => setSearchOpen(true)}>
+              <Search className="h-4 w-4" />
             </Button>
-            <Button variant="ghost" size="icon" aria-label="Search" className="hidden lg:flex">
-              {/* User Icon Placeholder */}
-              <div className="h-4 w-4 border-2 border-foreground/70 rounded-full" />
-            </Button>
+
+            {/* User Account */}
+            {user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="icon" aria-label="Account" className="relative">
+                    {userProfile?.photoURL ? (
+                      <img
+                        src={userProfile.photoURL}
+                        alt=""
+                        className="h-6 w-6 rounded-full object-cover"
+                        referrerPolicy="no-referrer"
+                      />
+                    ) : (
+                      <div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/15 text-primary">
+                        <User className="h-3.5 w-3.5" />
+                      </div>
+                    )}
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-56">
+                  <DropdownMenuLabel className="font-normal">
+                    <p className="text-sm font-medium">{userProfile?.displayName || "User"}</p>
+                    <p className="text-xs text-muted-foreground truncate">{user.email}</p>
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={() => navigate({ to: "/account" })}>
+                    <User className="mr-2 h-4 w-4" /> My Account
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => navigate({ to: "/wishlist" })}>
+                    <Heart className="mr-2 h-4 w-4" /> Wishlist
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem
+                    onClick={async () => { await logout(); toast.success("Signed out."); }}
+                    className="text-destructive focus:text-destructive"
+                  >
+                    <LogOut className="mr-2 h-4 w-4" /> Sign Out
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Link to="/auth">
+                <Button variant="ghost" size="icon" aria-label="Sign In">
+                  <User className="h-4 w-4" />
+                </Button>
+              </Link>
+            )}
+
             <Button variant="ghost" size="icon" aria-label="Cart" className="relative">
               <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4H6z" />
@@ -197,9 +274,12 @@ export function Footer() {
         <div>
           <h4 className="mb-6 text-[11px] font-bold uppercase tracking-[0.2em] text-foreground">Shop</h4>
           <ul className="space-y-4 text-[13px] font-light text-muted-foreground">
-            <li><Link to="/shop/$category" params={{ category: "cosmetics" }} className="hover:text-primary transition-colors">All Cosmetics</Link></li>
+            <li><Link to="/shop/$category" params={{ category: "skincare" }} className="hover:text-primary transition-colors">Skincare</Link></li>
+            <li><Link to="/shop/$category" params={{ category: "makeup" }} className="hover:text-primary transition-colors">Makeup</Link></li>
+            <li><Link to="/shop/$category" params={{ category: "hair-care" }} className="hover:text-primary transition-colors">Hair Care</Link></li>
+            <li><Link to="/shop/$category" params={{ category: "fragrances" }} className="hover:text-primary transition-colors">Fragrances</Link></li>
             <li><Link to="/shop/$category" params={{ category: "new" }} className="hover:text-primary transition-colors">New Arrivals</Link></li>
-            <li><Link to="/shop/$category" params={{ category: "sale" }} className="hover:text-primary transition-colors">Summer Sale</Link></li>
+            <li><Link to="/shop/$category" params={{ category: "sale" }} className="hover:text-primary transition-colors">Sale</Link></li>
           </ul>
         </div>
         <div>
