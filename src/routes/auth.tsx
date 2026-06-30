@@ -98,12 +98,16 @@ function AuthPage() {
       await loginWithGoogle();
       toast.success("Welcome!");
       navigate({ to: "/account" });
+      setIsLoading(false);
     } catch (err: any) {
+      if (err?.code === "auth/redirect-started") {
+        toast.info("Redirecting to Google...");
+        return; // Retain isLoading true state as we redirect the page
+      }
+      setIsLoading(false);
       if (err?.code !== "auth/popup-closed-by-user") {
         toast.error("Google sign-in failed. Please try again.");
       }
-    } finally {
-      setIsLoading(false);
     }
   }
 

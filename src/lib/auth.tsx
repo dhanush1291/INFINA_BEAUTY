@@ -4,6 +4,8 @@ import {
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
     signInWithPopup,
+    signInWithRedirect,
+    getRedirectResult,
     GoogleAuthProvider,
     signOut,
     updateProfile,
@@ -85,6 +87,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        // Handle redirect result if user just returned from Google sign-in redirect
+        getRedirectResult(auth)
+            .then(async (result) => {
+                if (result?.user) {
+                    const profile = await createOrUpdateUserDoc(result.user, "google");
+                    setUserProfile(profile);
+                }
+            })
+            .catch((err) => {
+                console.error("Error resolving Google Sign In redirect:", err);
+            });
+
         const unsub = onAuthStateChanged(auth, async (fbUser) => {
             setUser(fbUser);
             if (fbUser) {
@@ -119,9 +133,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
 
     const loginWithGoogle = async () => {
-        const cred = await signInWithPopup(auth, googleProvider);
-        const profile = await createOrUpdateUserDoc(cred.user, "google");
-        setUserProfile(profile);
+        try {
+            const cred = await signInWithPopup(auth, googleProvider);
+            const profile = await createOrUpdateUserDoc(cred.user, "google");
+            setUserProfile(profile);
+        } catch (error: any) {
+            console.error("Google popup sign-in failed, trying redirect fallback:", error);
+            const fallbackCodes = [
+                "auth/popup-blocked",
+                "auth/popup-closed-by-user",
+                "auth/cancelled-popup-request",
+                "auth/internal-error"
+            ];
+
+            if (
+                fallbackCodes.includes(error?.code) ||
+                error?.message?.includes("popup") ||
+                error?.message?.includes("Cross-Origin-Opener-Policy")
+            ) {
+                await signInWithRedirect(auth, googleProvider);
+                throw { code: "auth/redirect-started", message: "Redirecting to Google..." };
+            } else {
+                throw error;
+            }
+        }
     };
 
     const logout = async () => {
