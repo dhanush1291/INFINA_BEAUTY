@@ -110,6 +110,11 @@ export function Header() {
                         <Link to="/account" className="rounded-md px-3 py-3 text-base font-medium hover:bg-muted flex items-center gap-2">
                           <User className="h-4 w-4" /> My Account
                         </Link>
+                        {userProfile?.role === "admin" && (
+                          <Link to="/admin" className="rounded-md px-3 py-3 text-base font-medium hover:bg-muted flex items-center gap-2">
+                            <Settings className="h-4 w-4" /> Admin Panel
+                          </Link>
+                        )}
                         <button
                           onClick={async () => { await logout(); toast.success("Signed out."); }}
                           className="rounded-md px-3 py-3 text-base hover:bg-muted text-left flex items-center gap-2 w-full text-destructive"
@@ -178,6 +183,11 @@ export function Header() {
                   <DropdownMenuItem onClick={() => navigate({ to: "/wishlist" })}>
                     <Heart className="mr-2 h-4 w-4" /> Wishlist
                   </DropdownMenuItem>
+                  {userProfile?.role === "admin" && (
+                    <DropdownMenuItem onClick={() => navigate({ to: "/admin" })}>
+                      <Settings className="mr-2 h-4 w-4" /> Admin Panel
+                    </DropdownMenuItem>
+                  )}
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
                     onClick={async () => { await logout(); toast.success("Signed out."); }}

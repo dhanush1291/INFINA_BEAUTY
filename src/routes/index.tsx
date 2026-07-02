@@ -92,12 +92,12 @@ function CategoryCircle({ category, title, image }: { category: string; title: s
       params={{ category }}
       className="group flex flex-col items-center gap-4 text-center"
     >
-      <div className="relative h-40 w-40 overflow-hidden rounded-full border border-border shadow-soft transition-transform duration-500 group-hover:scale-105 md:h-56 md:w-56">
+      <div className="relative h-40 w-40 overflow-hidden rounded-full border border-border/80 shadow-soft transition-all duration-500 cubic-bezier(0.16, 1, 0.3, 1) group-hover:scale-105 group-hover:-translate-y-2 group-hover:shadow-antigravity md:h-56 md:w-56">
         <img src={image} alt={title} className="h-full w-full object-cover" />
       </div>
-      <div>
+      <div className="transition-transform duration-300 group-hover:translate-y-0.5">
         <h3 className="font-serif text-xl tracking-tight text-foreground">{title}</h3>
-        <span className="text-xs uppercase tracking-widest text-muted-foreground transition-colors group-hover:text-primary">Shop Now</span>
+        <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground transition-colors group-hover:text-primary font-semibold">Shop Now</span>
       </div>
     </Link>
   );
@@ -181,21 +181,24 @@ function Home() {
         </div>
       </section>
 
-      {/* Features - Minimalist */}
+      {/* Features - Translucent Glassmorphism Cards */}
       <section className="py-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="grid gap-12 md:grid-cols-3">
+          <div className="grid gap-8 md:grid-cols-3">
             {[
               { icon: Sparkles, title: "Clean Formula", body: "Cruelty-free, vegan-friendly, and dermatologist tested for all skin types." },
               { icon: ShieldCheck, title: "Trusted Luxury", body: "Premium ingredients curated for long-lasting performance." },
               { icon: Truck, title: "Fast Shipping", body: "Direct and secure delivery to your doorstep with premium packaging." },
             ].map((f) => (
-              <div key={f.title} className="flex flex-col items-center text-center">
-                <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 text-primary">
+              <div 
+                key={f.title} 
+                className="flex flex-col items-center text-center p-8 rounded-2xl glass-panel shadow-soft hover:shadow-antigravity transition-all duration-300 hover:-translate-y-2 cursor-default"
+              >
+                <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 text-primary shadow-inner transition-transform duration-500 hover:rotate-12">
                   <f.icon className="h-6 w-6" />
                 </div>
-                <h3 className="font-serif text-2xl tracking-tight">{f.title}</h3>
-                <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
+                <h3 className="font-serif text-2xl tracking-tight text-foreground">{f.title}</h3>
+                <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground font-light">
                   {f.body}
                 </p>
               </div>

@@ -1,5 +1,6 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState, useEffect, useRef } from "react";
+import { useAuth } from "@/lib/auth";
 import {
     Plus, Pencil, Trash2, Save, X, Upload, Link as LinkIcon,
     Package, Image, RotateCcw, Search, Eye, EyeOff,
@@ -56,6 +57,8 @@ function emptyProduct(): Product {
 }
 
 function AdminPage() {
+    const { user, userProfile, loading: authLoading } = useAuth();
+    const navigate = useNavigate();
     const [items, setItems] = useState<Product[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [isSaving, setIsSaving] = useState(false);
@@ -66,20 +69,59 @@ function AdminPage() {
     const [imageInput, setImageInput] = useState("");
     const fileRef = useRef<HTMLInputElement>(null);
 
-    // Fetch from Firebase on mount
+    // Redirect if not logged in or not admin
     useEffect(() => {
-        async function load() {
-            try {
-                const fetched = await getProductsFromDb();
-                setItems(fetched);
-            } catch (error) {
-                toast.error("Failed to load products.");
-            } finally {
-                setIsLoading(false);
+        if (!authLoading) {
+            if (!user) {
+                toast.error("Please sign in to access the Admin Panel.");
+                navigate({ to: "/auth" });
+            } else if (userProfile?.role !== "admin") {
+                toast.error("Access denied. Admin rights required.");
+                navigate({ to: "/account" });
             }
         }
-        load();
-    }, []);
+    }, [user, userProfile, authLoading, navigate]);
+
+    // Fetch from Firebase on mount
+    useEffect(() => {
+        if (user && userProfile?.role === "admin") {
+            async function load() {
+                try {
+                    const fetched = await getProductsFromDb();
+                    setItems(fetched);
+                } catch (error) {
+                    toast.error("Failed to load products.");
+                } finally {
+                    setIsLoading(false);
+                }
+            }
+            load();
+        }
+    }, [user, userProfile]);
+
+    if (authLoading || (user && userProfile?.role === "admin" && isLoading)) {
+        return (
+            <div className="flex min-h-[60vh] items-center justify-center">
+                <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            </div>
+        );
+    }
+
+    if (!user || userProfile?.role !== "admin") {
+        return (
+            <div className="flex min-h-[60vh] flex-col items-center justify-center px-4 text-center">
+                <div className="rounded-full bg-destructive/10 p-4 text-destructive">
+                    <svg className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                </div>
+                <h2 className="mt-4 font-serif text-2xl font-semibold">Access Denied</h2>
+                <p className="mt-2 text-sm text-muted-foreground max-w-sm">
+                    You do not have the required administrative permissions to view this panel. Redirecting...
+                </p>
+            </div>
+        );
+    }
 
     const filtered = items.filter((p) => {
         const matchesSearch =

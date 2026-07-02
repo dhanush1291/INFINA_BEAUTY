@@ -19,6 +19,13 @@ import {
     serverTimestamp,
 } from "firebase/firestore";
 import { auth, db } from "./firebase";
+import { toast } from "sonner";
+
+const ADMIN_EMAILS = [
+    "admin@infina.com",
+    "admin@infina-beauty.com",
+    "anjalisimmalapudi@gmail.com",
+];
 
 // ─── User Profile in Firestore ──────────────────────────────────────────────
 export interface UserProfile {
@@ -33,6 +40,7 @@ export interface UserProfile {
     createdAt: any;
     updatedAt: any;
     provider: "email" | "google";
+    role?: "admin" | "user";
 }
 
 // ─── Auth Context ───────────────────────────────────────────────────────────
@@ -53,12 +61,57 @@ const AuthContext = createContext<AuthContextType | null>(null);
 const googleProvider = new GoogleAuthProvider();
 
 async function createOrUpdateUserDoc(user: User, provider: "email" | "google", extraData?: Partial<UserProfile>) {
-    const userRef = doc(db, "users", user.uid);
-    const userSnap = await getDoc(userRef);
+    const isDefaultAdmin = user.email && ADMIN_EMAILS.includes(user.email.toLowerCase());
 
-    if (!userSnap.exists()) {
-        // New user — create profile
-        const profile: UserProfile = {
+    try {
+        const userRef = doc(db, "users", user.uid);
+        const userSnap = await getDoc(userRef);
+
+        if (!userSnap.exists()) {
+            // New user — create profile
+            const profile: UserProfile = {
+                uid: user.uid,
+                email: user.email ?? "",
+                displayName: user.displayName ?? extraData?.displayName ?? "",
+                photoURL: user.photoURL ?? undefined,
+                phone: "",
+                countryCode: "+91",
+                gender: "",
+                dateOfBirth: "",
+                createdAt: serverTimestamp(),
+                updatedAt: serverTimestamp(),
+                provider,
+                role: isDefaultAdmin ? "admin" : "user",
+                ...extraData,
+            };
+            try {
+                await setDoc(userRef, profile);
+            } catch (writeErr) {
+                console.error("Firestore write failed, returning local profile", writeErr);
+            }
+            return profile;
+        } else {
+            // Existing user — update last login
+            const existingData = userSnap.data() as UserProfile;
+            const updatedProfile: UserProfile = {
+                ...existingData,
+                role: existingData.role || (isDefaultAdmin ? "admin" : "user"),
+                updatedAt: new Date().toISOString(),
+            };
+            try {
+                await setDoc(userRef, { 
+                    updatedAt: serverTimestamp(),
+                    role: updatedProfile.role 
+                }, { merge: true });
+            } catch (writeErr) {
+                console.error("Firestore update failed", writeErr);
+            }
+            return updatedProfile;
+        }
+    } catch (dbErr) {
+        console.error("Error in createOrUpdateUserDoc, falling back to local object", dbErr);
+        // Return a local fallback profile so the user is not locked out of the app
+        return {
             uid: user.uid,
             email: user.email ?? "",
             displayName: user.displayName ?? extraData?.displayName ?? "",
@@ -67,17 +120,12 @@ async function createOrUpdateUserDoc(user: User, provider: "email" | "google", e
             countryCode: "+91",
             gender: "",
             dateOfBirth: "",
-            createdAt: serverTimestamp(),
-            updatedAt: serverTimestamp(),
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
             provider,
+            role: isDefaultAdmin ? "admin" : "user",
             ...extraData,
         };
-        await setDoc(userRef, profile);
-        return profile;
-    } else {
-        // Existing user — update last login
-        await setDoc(userRef, { updatedAt: serverTimestamp() }, { merge: true });
-        return userSnap.data() as UserProfile;
     }
 }
 
@@ -97,6 +145,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             })
             .catch((err) => {
                 console.error("Error resolving Google Sign In redirect:", err);
+                toast.error(`Google Sign-In redirect failed: ${err?.message || err}`);
             });
 
         const unsub = onAuthStateChanged(auth, async (fbUser) => {
@@ -107,9 +156,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                     const snap = await getDoc(userRef);
                     if (snap.exists()) {
                         setUserProfile(snap.data() as UserProfile);
+                    } else {
+                        // Document doesn't exist yet, attempt to create it
+                        const provider = fbUser.providerData[0]?.providerId === "google.com" ? "google" : "email";
+                        const profile = await createOrUpdateUserDoc(fbUser, provider);
+                        setUserProfile(profile);
                     }
                 } catch (err) {
                     console.error("Error loading profile:", err);
+                    // Fallback to local profile based on auth credentials
+                    const isDefaultAdmin = fbUser.email && ADMIN_EMAILS.includes(fbUser.email.toLowerCase());
+                    setUserProfile({
+                        uid: fbUser.uid,
+                        email: fbUser.email ?? "",
+                        displayName: fbUser.displayName ?? "",
+                        photoURL: fbUser.photoURL ?? undefined,
+                        phone: "",
+                        countryCode: "+91",
+                        gender: "",
+                        dateOfBirth: "",
+                        createdAt: new Date().toISOString(),
+                        updatedAt: new Date().toISOString(),
+                        provider: fbUser.providerData[0]?.providerId === "google.com" ? "google" : "email",
+                        role: isDefaultAdmin ? "admin" : "user",
+                    });
                 }
             } else {
                 setUserProfile(null);

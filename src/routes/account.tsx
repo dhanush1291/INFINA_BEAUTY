@@ -40,13 +40,15 @@ function AccountPage() {
 
   useEffect(() => {
     if (userProfile) {
-      setDisplayName(userProfile.displayName ?? "");
+      setDisplayName(userProfile.displayName ?? user?.displayName ?? "");
       setCountryCode(userProfile.countryCode || "+91");
       setPhone(userProfile.phone ?? "");
       setGender(userProfile.gender ?? "");
       setDateOfBirth(userProfile.dateOfBirth ?? "");
+    } else if (user) {
+      setDisplayName(user.displayName ?? "");
     }
-  }, [userProfile]);
+  }, [userProfile, user]);
 
   if (loading) {
     return (
@@ -124,13 +126,15 @@ function AccountPage() {
             {/* Name & Email */}
             <div className="flex-1 text-center md:text-left">
               <h1 className="font-serif text-3xl md:text-4xl">
-                {userProfile?.displayName || "Welcome"}
+                {userProfile?.displayName || user?.displayName || "Welcome"}
               </h1>
               <p className="mt-1 text-sm text-muted-foreground">{user.email}</p>
               <p className="mt-2 text-xs text-muted-foreground/70">
                 Member since {userProfile?.createdAt?.toDate?.()
                   ? new Date(userProfile.createdAt.toDate()).toLocaleDateString("en-IN", { month: "long", year: "numeric" })
-                  : "recently"}
+                  : userProfile?.createdAt
+                    ? new Date(userProfile.createdAt).toLocaleDateString("en-IN", { month: "long", year: "numeric" })
+                    : "recently"}
               </p>
             </div>
 
@@ -204,7 +208,7 @@ function AccountPage() {
                     {isEditing ? (
                       <Input value={displayName} onChange={(e) => setDisplayName(e.target.value)} className="h-11 rounded-lg" />
                     ) : (
-                      <p className="py-2.5 text-sm font-medium">{userProfile?.displayName || "—"}</p>
+                      <p className="py-2.5 text-sm font-medium">{userProfile?.displayName || user?.displayName || "—"}</p>
                     )}
                   </div>
                   <div>

@@ -161,6 +161,42 @@
   .shadow-soft { box-shadow: var(--shadow-soft); }
   .shadow-elegant { box-shadow: var(--shadow-elegant); }
   .text-balance { text-wrap: balance; }
+
+  /* Antigravity Design System Utilities */
+  .shadow-antigravity {
+    box-shadow: 0 15px 35px oklch(0.15 0.01 20 / 0.05), 0 1px 3px oklch(0.15 0.01 20 / 0.02);
+  }
+  
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+  }
+  .dark .glass-panel {
+    background: rgba(30, 30, 30, 0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .floating-card {
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform;
+  }
+  .floating-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 25px 50px oklch(0.15 0.01 20 / 0.08), 0 1px 3px oklch(0.15 0.01 20 / 0.02);
+  }
+  
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+  
+  .tilt-grid-container {
+    transform-style: preserve-3d;
+    perspective: 1200px;
+  }
 }
 
 @keyframes fade-in {
